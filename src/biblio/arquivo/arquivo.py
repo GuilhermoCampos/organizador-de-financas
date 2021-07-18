@@ -104,11 +104,11 @@ def adicionar(path):
                 print('Opção Inválida, Tente novamente!')
                 continue
         while True:
-            data = leiaInt('Data: ')
+            data = leiaInt('Dia: ')
             if 0 < data <= 31:
                 break
             else:
-                print('Data Inválida, Tente novamente!')
+                print('Dia Inválida, Tente novamente!')
                 continue
         lancamento = str(input('Lançamento: ')).strip()
         while True:
@@ -211,7 +211,11 @@ def limpar(path):
 
 def delpasta(path):
 #    system(f'rmdir /s /q {path}')
-    print(path)
+    print(f'Por favor vá até: \n"{path}" \ne delete o arquivo')
+    input('Enter para Continuar!')
+    return
+    '''
+    *Função desativada por risco de bug deletar todos os arquivos de diretórios superiores*
     c = 0
     while c < (tamterm - 3):
         clear()
@@ -232,9 +236,15 @@ def delpasta(path):
         print(f'║ {vazio} ║', flush=True)
         linhas('╚', '╝', '═', tamterm, flush=True)
     input('Enter para Continuar!')
+    '''
 
 
 def delarquivo(path):
+    print(f'Por favor vá até: \n"{path}" \ne delete o arquivo')
+    input('Enter para Continuar!')
+    return
+    '''
+    *Função desativada por risco de bug deletar todos os arquivos de diretórios superiores*
     """
     Deleta o arquivo do local especificado.
     :param path: Local do arquivo a ser deletado.
@@ -262,6 +272,7 @@ def delarquivo(path):
         linhas('╚', '╝', '═', tamterm, flush=True)
     input('Enter para Continuar!')
     return
+    '''
 
 
 def criarpasta(path):
@@ -381,7 +392,7 @@ def lerpasta(pathpasta):
                 input('Pressione Enter Para continuar.')
             else:
                 try:
-#                    delpasta(f'{atualpath}\{pathpasta}\{lista[deletar]}')
+                    delpasta(f'{atualpath}\{pathpasta}\{lista[deletar]}')
                     print(f'{atualpath}\{pathpasta}\{lista[deletar]}')
                 except Exception as erro:
                     print(f'Não foi possivel deletar esta pasta!, erro:"{erro.__class__}"')
@@ -406,10 +417,32 @@ def pastapadrao():
          '04-Abril.txt','05-Maio.txt','06-Junho.txt',
          '07-Julho.txt','08-Agosto.txt','09-Setembro.txt',
          '10-Outubro.txt','11-Novembro.txt','12-Dezembro.txt']
+
     try:
         arquivo = f'{atualpath}{data[0]}\{mes[data[1]-1]}'
         open(arquivo, 'r')
+
     except:
+        c = 0
+        while c < (tamterm-3):
+            clear()
+            if c < (tamterm-4):
+                cabecalho('Criando Pasta...')
+            else:
+                cabecalho('Pasta Criada!')
+            cheio = "■" * c
+            vazio = "□" * ((tamterm-4) - c)
+            print(f'║ {cheio}{vazio} ║', flush=True)
+            linhas('╚', '╝', '═', tamterm, flush=True)
+            c += barra
+            sleep(0.09)
+        if c > (tamterm - 11):
+            clear()
+            cabecalho('Pasta Criada!')
+            cheio = "■" * (tamterm - 4)
+            print(f'║ {cheio} ║', flush=True)
+        linhas('╚', '╝', '═', tamterm, flush=True)
+
         try:
             system(f'mkdir "{atualpath}{data[0]}"')
             for p, c  in enumerate(mes):
@@ -423,3 +456,20 @@ def pastapadrao():
             print(f'Não Foi possivel devido ao erro: "{erro.__class__}"')
     arquivo = f'{atualpath}{data[0]}\{mes[data[1]-1]}'
     return arquivo
+
+'''
+def pegaSaldo(arquvio, mesArquivo):
+    data = localtime().tm_year
+    mes = ['01-Janeiro.txt','02-Fevereiro.txt','03-Março.txt',
+         '04-Abril.txt','05-Maio.txt','06-Junho.txt',
+         '07-Julho.txt','08-Agosto.txt','09-Setembro.txt',
+         '10-Outubro.txt','11-Novembro.txt','12-Dezembro.txt']
+    try:
+        arquivo = f'{atualpath}{data}\{mes[data[mesArquivo]-2]}'
+        open(arquivo, 'r')
+        return arquivo
+    except: 
+        arquivo = f'{atualpath}{data-1}\{mes[11]}'
+        open(arquivo, 'r')
+        return arquivo
+'''

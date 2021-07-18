@@ -1,0 +1,2 @@
+E;02;Entrada;15.0
+E;07;Outra Entrada;32.0

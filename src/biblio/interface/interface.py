@@ -4,6 +4,17 @@ from biblio.interface.interface import *
 from os import get_terminal_size, system, getlogin
 tamterm = get_terminal_size()
 tamterm = tamterm[0]
+if tamterm < 50:
+    barra = 2
+elif tamterm < 75:
+    barra = 4
+elif tamterm < 100:
+    barra = 6
+elif tamterm < 125:
+    barra = 8
+elif tamterm < 150:
+    barra = 10
+
 
 
 def linhas(inicio, fim , simb, tam, end='\n', flush=False):
@@ -54,8 +65,6 @@ def menuArquivo():
     system('title Tabela de Finanças')
     system('color 0a')
     clear()
-    tamterm = get_terminal_size()
-    tamterm = int(tamterm[0])
     nome = getlogin()
     msg = f'Seja bem Vindo {nome}'
     linhas('╔', '╗', '═', tamterm)
@@ -63,7 +72,7 @@ def menuArquivo():
     linhas('╠', '╣', '═', tamterm)
     print(f'║{"Opções":^{tamterm-2}}║')
     linhas('╠', '╣', '═', tamterm)
-    print(f'║{" 1 - Criar um Arquivo Padrão":^{(tamterm//2) - 2}}║{" 2 - Navegar Pelas Pastas":^{((tamterm//2) - 1)}}║')
+    print(f'║{" 1 - Abrir um Arquivo Padrão":^{(tamterm//2) - 2}}║{" 2 - Navegar Pelas Pastas":^{((tamterm//2))}}║')
     linhas('╚', '╝', '═', tamterm)
     opc = leiaInt('Opção: ')
     return opc
@@ -82,17 +91,17 @@ def organizar(arquivo):
     return lista
 
 
-def mostrar(lista, nome):
+def mostrar(lista, nome):#path
     """
     Mostra uma lista organizada dos participantes. Com a Posição, O Nome e a Pontuação atual do participante.
     :param lista: Lista que será mostrada.
     """
     cabecalho(nome)
-    print(f'║{"  [ 1 ] - Adicionar Item":^{((tamterm//2)-2)}}║{"  [ 2 ] - Modificar Item":^{((tamterm//2) - 1)}}║')
+    print(f'║{"  [ 1 ] - Adicionar Item":^{((tamterm//2)-2)}}║{"  [ 2 ] - Modificar Item":^{((tamterm//2))}}║')
     linhas('╟', '╢', '─', tamterm)
-    print(f'║{"  [ 3 ] - Remover Item  ":^{((tamterm//2)-2)}}║{"  [ 4 ] - Limpar Arquivo":^{((tamterm//2) - 1)}}║')
+    print(f'║{"  [ 3 ] - Remover Item  ":^{((tamterm//2)-2)}}║{"  [ 4 ] - Limpar Arquivo":^{((tamterm//2))}}║')
     linhas('╟', '╢', '─', tamterm)
-    print(f'║{"  [ 5 ] - Retornar      ":^{((tamterm//2)-2)}}║{"  [ 6 ] - Sair          ":^{((tamterm//2) - 1)}}║')
+    print(f'║{"  [ 5 ] - Retornar      ":^{((tamterm//2)-2)}}║{"  [ 6 ] - Sair          ":^{((tamterm//2))}}║')
     linhas('╠', '╣', '═', tamterm)
     print(f'║ {"POS":>3} ║ {"E/S":^3} ║ {"DATA":^6} ║ {"       Lançamentos":^{tamterm-55}} ║ {"Valor":^12} ║ {"Saldo":^12} ║')
     linhas('╠', '╣', '═', tamterm)
@@ -106,6 +115,8 @@ def mostrar(lista, nome):
     for p, c in enumerate(lista):
         mov += 1
         c[3] = float(c[3])
+        # if p == 0:
+            #print(organizar(pastapadrao(True))[-1][3])
         if c[0] == 'S':
             saldo = saldo - c[3]
             sai += c[3]
@@ -134,7 +145,7 @@ def mostrar(lista, nome):
     saldo_atual = f'Saldo Atual: R${salatu:<10}'
     movimentacoes = f'Movimentações :{mov:<6}'
     linhas('╠', '╣', '═', tamterm)
-    print(f'║ {entrada:31} ║ {saidas:30} ║ {saldo_atual:{(tamterm-99)}} ║ {movimentacoes} ║') #81
+    print(f'║ {entrada:30} ║ {saidas:29} ║ {saldo_atual:{(tamterm-99)}} ║ {movimentacoes} ║') #81
     linhas('╚', '╝', '═', tamterm)
     opc = leiaInt('Opção: ')
     return opc
